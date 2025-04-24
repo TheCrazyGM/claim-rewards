@@ -1,0 +1,66 @@
+[project]
+name = "claim-rewards"
+version = "0.1.5"
+description = "Claim rewards for multiple Hive accounts using a single authority account"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE.txt" }
+authors = [{ name = "Michael Garcia", email = "thecrazygm@gmail.com" }]
+maintainers = [{ name = "Michael Garcia", email = "thecrazygm@gmail.com" }]
+keywords = ["automation", "hive", "rewards"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+]
+dependencies = [
+  "hive-nectar>=0.0.6",
+  "pyyaml>=6.0.2",
+]
+
+[project.urls]
+BugTracker = "https://github.com/thecrazygm/claim-rewards/issues"
+Homepage = "https://github.com/thecrazygm/claim-rewards"
+
+[project.scripts]
+claim-rewards = "claim_rewards.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+include = ["src/claim_rewards/**"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/claim_rewards"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+exclude = [
+  ".tox",
+  ".git",
+  "__pycache__",
+  "docs/source/conf.py",
+  "build",
+  "dist",
+  "tests/fixtures/*",
+  "*.pyc",
+  "*.egg-info",
+  ".cache",
+  ".eggs",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
+"**/{tests,docs,tools}/*" = ["E402"]
