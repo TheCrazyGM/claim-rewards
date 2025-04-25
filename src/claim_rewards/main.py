@@ -269,19 +269,19 @@ def main():
         description="Claim Hive rewards for multiple accounts using one authority."
     )
     parser.add_argument(
-        "--wif",
+        "-w", "--wif",
         type=str,
         default=None,
         help="Posting WIF (private key) for authority account. If omitted, uses POSTING_WIF env variable.",
     )
-    parser.add_argument("--debug", action="store_true", help="Enable debug logging.")
+    parser.add_argument("-d", "--debug", action="store_true", help="Enable debug logging.")
     parser.add_argument(
-        "--dry-run",
+        "-n", "--dry-run",
         action="store_true",
         help="Simulate reward claims without broadcasting transactions.",
     )
     parser.add_argument(
-        "--accounts",
+        "-a", "--accounts",
         type=str,
         default=None,
         help="Path to YAML file with accounts and/or WIF. If omitted, uses accounts.yaml if available.",
