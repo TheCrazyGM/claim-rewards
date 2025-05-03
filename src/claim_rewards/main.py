@@ -41,20 +41,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# ----------------------
-# Hive node configuration
-# ----------------------
-NODES_URL = [
-    "https://api.syncad.com",
-    "https://api.hive.blog",
-]
 
-
-# ---------------------------------
-# List of accounts to claim rewards
-# ---------------------------------
 # The first account in this list is used as the authority (posting key must be for this account)
-def load_accounts_and_wif(accounts_path: str = None):
+def load_accounts_and_posting_key(accounts_path: str = None):
     import os
 
     import yaml
@@ -63,8 +52,8 @@ def load_accounts_and_wif(accounts_path: str = None):
         try:
             with open(accounts_path, "r") as f:
                 data = yaml.safe_load(f)
-            logger.info(f"Loaded accounts and WIF from {accounts_path}")
-            return data.get("accounts", []), data.get("wif")
+            logger.info(f"Loaded accounts and Posting Key from {accounts_path}")
+            return data.get("accounts", []), data.get("posting_key")
         except Exception as e:
             logger.error(f"Failed to load accounts from {accounts_path}: {e}")
             sys.exit(1)
@@ -73,8 +62,8 @@ def load_accounts_and_wif(accounts_path: str = None):
         try:
             with open("accounts.yaml", "r") as f:
                 data = yaml.safe_load(f)
-            logger.info("Loaded accounts and WIF from accounts.yaml")
-            return data.get("accounts", []), data.get("wif")
+            logger.info("Loaded accounts and Posting Key from accounts.yaml")
+            return data.get("accounts", []), data.get("posting_key")
         except Exception as e:
             logger.error(f"Failed to load accounts from accounts.yaml: {e}")
             sys.exit(1)
@@ -84,35 +73,35 @@ def load_accounts_and_wif(accounts_path: str = None):
     sys.exit(1)
 
 
-def get_wif(cli_wif: str = None, yaml_wif: str = None) -> str:
+def get_posting_key(cli_posting_key: str = None, yaml_posting_key: str = None) -> str:
     """
-    Retrieve and validate the posting WIF (private key) from CLI, YAML, or environment variables.
+    Retrieve and validate the posting Posting Key (private key) from CLI, YAML, or environment variables.
     Args:
-        cli_wif (str, optional): WIF from command-line argument.
-        yaml_wif (str, optional): WIF from YAML config.
+        cli_posting_key (str, optional): Posting Key from command-line argument.
+        yaml_posting_key (str, optional): Posting Key from YAML config.
     Returns:
-        str: The posting WIF.
+        str: The posting Posting Key.
     """
     logger.debug(
-        f"Attempting to retrieve WIF (cli_wif provided: {bool(cli_wif)}, yaml_wif provided: {bool(yaml_wif)})"
+        f"Attempting to retrieve Posting Key (cli_posting_key provided: {bool(cli_posting_key)}, yaml_posting_key provided: {bool(yaml_posting_key)})"
     )
-    if cli_wif:
-        logger.info("Using WIF from --wif argument.")
-        wif = cli_wif
-    elif yaml_wif:
-        logger.info("Using WIF from YAML config file.")
-        wif = yaml_wif
+    if cli_posting_key:
+        logger.info("Using Posting Key from --posting_key argument.")
+        posting_key = cli_posting_key
+    elif yaml_posting_key:
+        logger.info("Using Posting Key from YAML config file.")
+        posting_key = yaml_posting_key
     else:
-        wif = os.getenv("POSTING_WIF")
-        if wif:
-            logger.info("Using WIF from POSTING_WIF environment variable.")
-    if not wif:
+        posting_key = os.getenv("POSTING_KEY")
+        if posting_key:
+            logger.info("Using Posting Key from POSTING_KEY environment variable.")
+    if not posting_key:
         logger.error(
-            "Posting WIF must be provided via --wif, YAML config, or POSTING_WIF env variable."
+            "Posting Posting Key must be provided via --posting_key, YAML config, or POSTING_KEY env variable."
         )
         sys.exit(1)
-    logger.debug("WIF successfully retrieved.")
-    return wif
+    logger.debug("Posting Key successfully retrieved.")
+    return posting_key
 
 
 def claim_rewards(hive: Hive, account_name: str) -> None:
@@ -174,12 +163,12 @@ def get_balance(account: Account) -> dict[str, Any]:
         return {}
 
 
-def connect_to_hive(wif: str) -> Hive:
+def connect_to_hive(posting_key: str) -> Hive:
     """
-    Establish a connection to the Hive blockchain using the provided posting WIF.
+    Establish a connection to the Hive blockchain using the provided posting Posting Key.
     Automatically selects the best available Hive nodes.
     Args:
-        wif (str): The posting private key.
+        posting_key (str): The posting private key.
     Returns:
         Hive: A connected Hive blockchain instance.
     """
@@ -189,7 +178,7 @@ def connect_to_hive(wif: str) -> Hive:
         nodelist.update_nodes()
         nodes = nodelist.get_hive_nodes()
         logger.debug(f"Selected Hive nodes: {nodes}")
-        hive = Hive(keys=[wif], node=nodes)
+        hive = Hive(keys=[posting_key], node=nodes)
         logger.debug("Hive instance created and connected.")
         return hive
     except Exception as e:
@@ -269,22 +258,25 @@ def main():
         description="Claim Hive rewards for multiple accounts using one authority."
     )
     parser.add_argument(
-        "-w", "--wif",
+        "-w",
+        "--posting_key",
         type=str,
         default=None,
-        help="Posting WIF (private key) for authority account. If omitted, uses POSTING_WIF env variable.",
+        help="Posting Posting Key (private key) for authority account. If omitted, uses POSTING_Posting Key env variable.",
     )
     parser.add_argument("-d", "--debug", action="store_true", help="Enable debug logging.")
     parser.add_argument(
-        "-n", "--dry-run",
+        "-n",
+        "--dry-run",
         action="store_true",
         help="Simulate reward claims without broadcasting transactions.",
     )
     parser.add_argument(
-        "-a", "--accounts",
+        "-a",
+        "--accounts",
         type=str,
         default=None,
-        help="Path to YAML file with accounts and/or WIF. If omitted, uses accounts.yaml if available.",
+        help="Path to YAML file with accounts and/or Posting Key. If omitted, uses accounts.yaml if available.",
     )
     args = parser.parse_args()
 
@@ -295,13 +287,13 @@ def main():
         logger.setLevel(logging.DEBUG)
         logger.debug("Debug logging enabled.")
 
-    # Load accounts list and WIF from YAML file or fallback
-    accounts, yaml_wif = load_accounts_and_wif(args.accounts)
-    # Retrieve the posting WIF from CLI, YAML, or environment
-    wif = get_wif(args.wif, yaml_wif)
+    # Load accounts list and Posting Key from YAML file or fallback
+    accounts, yaml_posting_key = load_accounts_and_posting_key(args.accounts)
+    # Retrieve the posting Posting Key from CLI, YAML, or environment
+    posting_key = get_posting_key(args.posting_key, yaml_posting_key)
     # Connect to the Hive blockchain
     logger.debug("Connecting to Hive blockchain...")
-    hive = connect_to_hive(wif)
+    hive = connect_to_hive(posting_key)
     # Use the first account in the list as the authority
     main_account_name = accounts[0]
     logger.debug(f"Using main authority account: {main_account_name}")

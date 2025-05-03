@@ -1,7 +1,7 @@
 # Sample accounts.yaml for Hive Multi-Account Reward Claimer
 # The first account in the list is used as the authority (posting key must be for this account).
-# Optionally, specify your posting WIF (private key) below. If not provided here, use --wif or POSTING_WIF env variable.
-wif: "PUT_YOUR_WIF_HERE"
+# Optionally, specify your posting_key (private key) below. If not provided here, use --posting-key or POSTING_KEY env variable.
+posting_key: "PUT_YOUR_POSTING_KEY_HERE"
 accounts:
   - thecrazygm
   - thecrazygm.bank

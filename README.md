@@ -5,19 +5,19 @@ Claim rewards for multiple Hive accounts using a single authority account
 ## Command-line Arguments
 
 ```bash
-claim-rewards [--wif WIF] [--debug] [--dry-run] [--accounts PATH]
+claim-rewards [--posting-key Posting Key] [--debug] [--dry-run] [--accounts PATH]
 ```
 
 | Argument     | Type | Description                                                                                 |
 | ------------ | ---- | ------------------------------------------------------------------------------------------- |
-| `--wif`      | str  | Posting WIF (private key) for authority account. If omitted, uses POSTING_WIF env variable. |
+| `--posting-key`      | str  | Posting Posting Key (private key) for authority account. If omitted, uses POSTING_Posting Key env variable. |
 | `--debug`    | flag | Enable debug logging.                                                                       |
 | `--dry-run`  | flag | Simulate reward claims without broadcasting transactions.                                   |
-| `--accounts` | str  | Path to YAML file with accounts and/or WIF. If omitted, uses accounts.yaml if available.    |
+| `--accounts` | str  | Path to YAML file with accounts and/or Posting Key. If omitted, uses accounts.yaml if available.    |
 
 ## Usage Examples
 
-Claim rewards for accounts listed in `accounts.yaml` (using WIF from env or YAML):
+Claim rewards for accounts listed in `accounts.yaml` (using Posting Key from env or YAML):
 
 ```bash
 claim-rewards
@@ -32,7 +32,7 @@ claim-rewards --accounts myaccounts.yaml
 Provide the posting key directly (not recommended for security reasons):
 
 ```bash
-claim-rewards --wif <YOUR_POSTING_WIF>
+claim-rewards --posting-key <YOUR_POSTING_KEY>
 ```
 
 Enable debug logging:
