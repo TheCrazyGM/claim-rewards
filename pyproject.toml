@@ -1,6 +1,6 @@
 [project]
 name = "claim-rewards"
-version = "0.1.5"
+version = "0.1.6"
 description = "Claim rewards for multiple Hive accounts using a single authority account"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -25,6 +25,7 @@ Homepage = "https://github.com/thecrazygm/claim-rewards"
 
 [project.scripts]
 claim-rewards = "claim_rewards.main:main"
+claim-scot = "claim_rewards.scot:main"
 
 [build-system]
 requires = ["hatchling"]
