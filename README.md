@@ -156,6 +156,7 @@ posting_key: 5J... # Your private posting key
 
 ## ❤️ Thanks & Credits
 
+- [hive-nectar](https://github.com/thecrazygm/hive-nectar/) - Python library for Hive blockchain interactions
 - Built with [Hatchling](https://hatch.pypa.io/latest/)
 - Of course [uv](https://docs.astral.sh/uv/) and [Ruff](https://docs.astral.sh/ruff/) for the amazing python tools.
 - Maintained by Michael Garcia (@thecrazygm).

@@ -1,12 +1,3 @@
-#!/usr/bin/env -S uv run --quiet --script
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#     "hive-nectar",
-#     "pyyaml",
-# ]
-#
-# ///
 """
 Hive Multi-Account Reward Claimer
 ---------------------------------
