@@ -106,7 +106,7 @@ Or use the modules directly:
 
 ```bash
 # For Hive blockchain rewards
-python -m claim_rewards.main
+python -m claim_rewards.hive
 
 # For SCOT token rewards
 python -m claim_rewards.scot
@@ -122,7 +122,7 @@ claim-rewards/
 │       ├── config.py           # Configuration handling
 │       ├── hive_client.py      # Hive blockchain operations
 │       ├── logging_setup.py    # Logging configuration
-│       ├── main.py             # Hive rewards claiming script
+│       ├── hive.py             # Hive rewards claiming script
 │       ├── scot.py             # SCOT token rewards claiming script
 │       └── scot_client.py      # SCOT token operations
 ├── pyproject.toml
