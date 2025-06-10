@@ -9,7 +9,7 @@ Claim rewards for multiple Hive accounts using a single authority account.
 - Claim rewards for multiple accounts using a single posting key
 - Configurable via YAML file, command-line arguments, or environment variables
 - Dry-run mode to simulate claims without broadcasting transactions
-- Detailed logging with debug option
+- Rich-formatted logging with debug option
 
 ## Command-line Arguments
 

@@ -4,8 +4,10 @@ Provides consistent logging setup across all modules.
 """
 
 import logging
-import sys
 from typing import Optional
+
+from rich.logging import RichHandler
+from rich.traceback import install as install_rich_traceback
 
 
 def setup_logging(level: Optional[int] = None) -> logging.Logger:
@@ -25,11 +27,15 @@ def setup_logging(level: Optional[int] = None) -> logging.Logger:
     for handler in logger.handlers:
         logger.removeHandler(handler)
 
-    # Set up basic configuration
+    # Install rich traceback handler for enhanced tracebacks
+    install_rich_traceback()
+
+    # Configure basic logging with RichHandler
     logging.basicConfig(
         level=level or logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s",
-        handlers=[logging.StreamHandler(sys.stdout)],
+        format="%(message)s",
+        datefmt="[%X]",
+        handlers=[RichHandler(rich_tracebacks=True, show_time=True)],
     )
 
     return logger
