@@ -1,25 +1,20 @@
 # claim-rewards
 
-Claim rewards for multiple Hive accounts using a single authority account. This package provides two command-line tools:
+Claim rewards for multiple Hive accounts using a single authority account.
 
 - `claim-hive`: Claim Hive blockchain rewards (HIVE, HBD, VESTS)
-- `claim-scot`: Claim SCOT token rewards from the Hive-Engine sidechain
 
 ## Features
 
 - Claim rewards for multiple accounts using a single posting key
-- Support for both Hive blockchain rewards and SCOT tokens
 - Configurable via YAML file, command-line arguments, or environment variables
 - Dry-run mode to simulate claims without broadcasting transactions
 - Detailed logging with debug option
 
 ## Command-line Arguments
 
-Both commands (`claim-hive` and `claim-scot`) accept the same arguments:
-
 ```bash
 claim-hive [--posting-key POSTING_KEY] [--debug] [--dry-run] [--accounts PATH]
-claim-scot [--posting-key POSTING_KEY] [--debug] [--dry-run] [--accounts PATH]
 ```
 
 | Argument           | Type | Description                                                                          |
@@ -63,18 +58,14 @@ Simulate (dry-run) without making actual transactions:
 claim-hive --dry-run
 ```
 
-### Claiming SCOT Token Rewards
-
-Claim SCOT token rewards for accounts listed in `accounts.yaml`:
-
 ```bash
-claim-scot
+
 ```
 
 With debug logging and dry-run mode:
 
 ```bash
-claim-scot -d --dry-run
+
 ```
 
 ## 🛠️ Installation (Editable/Development Mode)
@@ -98,8 +89,6 @@ After installation, you can use either command:
 # For Hive blockchain rewards
 claim-hive
 
-# For SCOT token rewards
-claim-scot
 ```
 
 Or use the modules directly:
@@ -108,8 +97,6 @@ Or use the modules directly:
 # For Hive blockchain rewards
 python -m claim_rewards.hive
 
-# For SCOT token rewards
-python -m claim_rewards.scot
 ```
 
 ## 🗂️ Project Structure
@@ -123,8 +110,6 @@ claim-rewards/
 │       ├── hive_client.py      # Hive blockchain operations
 │       ├── logging_setup.py    # Logging configuration
 │       ├── hive.py             # Hive rewards claiming script
-│       ├── scot.py             # SCOT token rewards claiming script
-│       └── scot_client.py      # SCOT token operations
 ├── pyproject.toml
 ├── README.md
 └── ...
