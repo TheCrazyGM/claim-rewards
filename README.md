@@ -4,6 +4,11 @@ Claim rewards for multiple Hive accounts using a single authority account.
 
 - `claim-hive`: Claim Hive blockchain rewards (HIVE, HBD, VESTS)
 
+This repository provides two ways to use the tool, depending on your needs:
+
+- A standalone script (`standalone/claim-rewards.py`) that can be run directly without installation.
+- A modular package under `src/claim_rewards` for importing into other Python projects.
+
 ## Features
 
 - Claim rewards for multiple accounts using a single posting key
@@ -96,13 +101,20 @@ Or use the modules directly:
 ```bash
 # For Hive blockchain rewards
 python -m claim_rewards.hive
+```
 
+Alternatively, you can run the standalone script directly without installing the package:
+
+```bash
+./standalone/claim-rewards.py
 ```
 
 ## 🗂️ Project Structure
 
 ```bash
 claim-rewards/
+├── standalone/
+│   └── claim-rewards.py      # Standalone script
 ├── src/
 │   └── claim_rewards/
 │       ├── __init__.py         # Package version information
