@@ -5,8 +5,7 @@ Provides functions for connecting to the Hive blockchain and performing common o
 
 import logging
 
-from nectar import Hive
-from nectar.nodelist import NodeList
+from nectar.hive import Hive
 
 logger = logging.getLogger(__name__)
 
@@ -26,13 +25,9 @@ def connect_to_hive(posting_key: str) -> Hive:
         SystemExit: If connection fails.
     """
     try:
-        logger.debug("Initializing NodeList and updating nodes...")
-        nodelist = NodeList()
-        nodelist.update_nodes()
-        nodes = nodelist.get_hive_nodes()
-
-        logger.info(f"Connecting to Hive nodes: {nodes}")
-        hive = Hive(keys=[posting_key], node=nodes)
+        logger.info("Connecting to Hive blockchain...")
+        # Let Hive handle node initialization internally to avoid duplicate beacon calls
+        hive = Hive(keys=[posting_key])
         logger.info("Connected to Hive blockchain.")
         return hive
     except Exception as e:
