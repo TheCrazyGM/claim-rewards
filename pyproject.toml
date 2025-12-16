@@ -65,3 +65,6 @@ exclude = [
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["E402"]
 "**/{tests,docs,tools}/*" = ["E402"]
+
+[tool.uv.sources]
+hive-nectar = { git = "https://github.com/thecrazygm/hive-nectar", rev = "v0.2.0" }
