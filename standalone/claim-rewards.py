@@ -158,6 +158,7 @@ def claim_rewards_for_all_accounts(
 
     success_count = 0
     for account_name in accounts:
+        target_account = None
         try:
             target_account = Account(account_name, blockchain_instance=hive)
             rewards = getattr(target_account, "reward_balances", [])
@@ -182,12 +183,14 @@ def claim_rewards_for_all_accounts(
         except Exception as e:
             logger.error(f"Error processing account {account_name}: {type(e).__name__}: {e}")
             logger.debug(traceback.format_exc())
-            try:
-                logger.debug(
-                    f"{account_name} account json: {getattr(target_account, 'json', None)}"
-                )
-            except Exception:
-                logger.debug(f"Could not retrieve account JSON for {account_name}")
+            # Lookup can fail before an account object exists.
+            if target_account is not None:
+                try:
+                    logger.debug(
+                        f"{account_name} account json: {getattr(target_account, 'json', None)}"
+                    )
+                except Exception:
+                    logger.debug(f"Could not retrieve account JSON for {account_name}")
     logger.info(f"Successfully processed {success_count} out of {len(accounts)} accounts")
 
 
